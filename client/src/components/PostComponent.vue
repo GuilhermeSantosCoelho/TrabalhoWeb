@@ -55,13 +55,17 @@ export default {
         });
     },
     createPosts() {
-      axios.post(url, { text: this.text });
+      axios.post(url, { text: this.text }).catch((error) => {
+        this.error = error.message;
+      });
       this.getPosts();
     },
     deletePosts(id) {
-      axios.delete(url + id);
+      axios.delete(url + id).catch((error) => {
+        this.error = error.message;
+      });
       this.getPosts();
-    }
+    },
   },
 };
 </script>
@@ -80,7 +84,7 @@ p.error {
   margin-bottom: 15px;
 }
 
-div.create-post{
+div.create-post {
   margin-bottom: 50px;
 }
 
