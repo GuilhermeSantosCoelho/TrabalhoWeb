@@ -5,7 +5,7 @@ const posts = require('./routes/api/posts')
 
 app.use(express.json())
 app.use(cors())
-app.use('/api/posts',  posts)
+app.use('api/posts',  posts)
 
 if(process.env.NODE_ENV === 'production'){
     app.use(express.static(__dirname + '/public/'));
