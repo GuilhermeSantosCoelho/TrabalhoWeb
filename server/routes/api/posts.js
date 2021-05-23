@@ -12,7 +12,6 @@ router.get('/', async (req, res) => {
 //Criar Post
 router.post('/', async (req, res) => {
     const posts = await loadPostCollections();
-    console.log(req.body)
 
     await posts.insertOne({
         text: req.body.text,
@@ -34,7 +33,5 @@ async function loadPostCollections() {
     await client.connect();
     return client.db('view_express').collection('posts');
 }
-
-loadPostCollections();
 
 module.exports = router;
