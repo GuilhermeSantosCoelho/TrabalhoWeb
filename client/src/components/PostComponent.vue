@@ -1,33 +1,110 @@
 <template>
-  <div>
-    
+  <div class="container">
+    <div class="posts-container">
+      <div class="create-post">
+        <label for="create-post">Deixe aqui seu comentário...</label>
+        <input type="text" id="create-post" v-model="text" />
+        <button @click="createPosts">Postar</button>
+      </div>
+      <div
+        class="post"
+        v-bind:item="post"
+        v-bind:index="index"
+        v-bind:key="post._id"
+        v-for="(post, index) in posts"
+        @dblclick="deletePosts(post._id)"
+      >
+        <div class="createdAt">
+          {{
+            `${post.createdAt.getDate()}/${post.createdAt.getMonth()}/${post.createdAt.getFullYear()}`
+          }}
+        </div>
+        <p class="text">{{ post.text }}</p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
-const url = 'http://localhost:5000/api/posts'
+import axios from "axios";
+const url = "api/posts/";
 export default {
-  name: 'PostComponent',
-  props: {
-  }
-}
+  name: "PostComponent",
+  data() {
+    return {
+      posts: [],
+      error: "",
+      text: "",
+    };
+  },
+  created() {
+    this.getPosts();
+  },
+  methods: {
+    getPosts() {
+      axios
+        .get(url)
+        .then((response) => {
+          this.posts = response.data.map((m) => ({
+            ...m,
+            createdAt: new Date(m.createdAt),
+          }));
+        })
+        .catch((error) => {
+          this.error = error.message;
+        });
+    },
+    createPosts() {
+      axios.post(url, { text: this.text });
+      this.getPosts();
+    },
+    deletePosts(id) {
+      axios.delete(url + id);
+      this.getPosts();
+    }
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
+div.container {
+  max-width: 800px;
+  margin: 0 auto;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+
+p.error {
+  border: 1px solid #ff5b5f;
+  background-color: #ffc5c1;
+  padding: 10px;
+  margin-bottom: 15px;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
+
+div.create-post{
+  margin-bottom: 50px;
 }
-a {
-  color: #42b983;
+
+div.post {
+  position: relative;
+  border: 1px solid #5bd658;
+  background-color: #bcffb8;
+  padding: 10px 10px 30px 10px;
+  margin-bottom: 15px;
+}
+
+div.createdAt {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 5px 15px 5px 15px;
+  background-color: darkgreen;
+  color: white;
+  font-size: 13px;
+}
+
+p.text {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 0;
 }
 </style>
