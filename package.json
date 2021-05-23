@@ -1,0 +1,22 @@
+{
+  "name": "trabalhoweb",
+  "version": "1.0.0",
+  "description": "Trabalho web",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GuilhermeSantosCoelho/TrabalhoWeb.git"
+  },
+  "author": "Guilherme Santos Coelho",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GuilhermeSantosCoelho/TrabalhoWeb/issues"
+  },
+  "homepage": "https://github.com/GuilhermeSantosCoelho/TrabalhoWeb#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
